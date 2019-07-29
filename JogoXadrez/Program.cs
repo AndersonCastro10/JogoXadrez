@@ -10,7 +10,11 @@ namespace JogoXadrez
             Posicao posicao = new Posicao(1, 2);
             Console.WriteLine(posicao);
 
-            Tabuleiro tab = new Tabuleiro(8, 8); 
+            Tabuleiro tab = new Tabuleiro(8, 8);
+
+            Tela.ImprimirTabuleiro(tab);
+
+            Console.ReadLine();
 
         }
     }

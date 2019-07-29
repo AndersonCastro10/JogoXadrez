@@ -13,5 +13,13 @@
             Pecas = new Peca[linhas, colunas];
         }
 
+        // dar acesso a uma peça individual, retornando uma peça em 
+        // um posição especifica
+
+        public Peca Peca(int linha, int coluna)
+        {
+            return Pecas[linha, coluna];
+        }
+
     }
 }
