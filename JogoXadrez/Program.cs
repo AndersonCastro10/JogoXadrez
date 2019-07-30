@@ -1,5 +1,7 @@
 ﻿using System;
-using JogoXadrez.Entidade.Tabuleiro;
+using JogoXadrez.Entidade.CamadaTabuleiro;
+using JogoXadrez.Entidade.CamadaXadrez;
+using JogoXadrez.Entidade.CamadaTabuleiro.Enum;
 
 namespace JogoXadrez
 {
@@ -10,9 +12,13 @@ namespace JogoXadrez
             Posicao posicao = new Posicao(1, 2);
             Console.WriteLine(posicao);
 
-            Tabuleiro tab = new Tabuleiro(8, 8);
+            Tabuleiro tabuleiro = new Tabuleiro(8, 8);
 
-            Tela.ImprimirTabuleiro(tab);
+            tabuleiro.ColocarPeca(new Torre(tabuleiro, Cor.Preta), new Posicao(0, 0));
+            tabuleiro.ColocarPeca(new Torre(tabuleiro, Cor.Preta), new Posicao(1, 3));
+            tabuleiro.ColocarPeca(new Rei(tabuleiro, Cor.Preta), new Posicao(2, 4));
+
+            Tela.ImprimirTabuleiro(tabuleiro);
 
             Console.ReadLine();
 

@@ -1,6 +1,6 @@
 ﻿using System;
-using JogoXadrez.Entidade.Tabuleiro;
-using JogoXadrez.Entidade.Tabuleiro.Enum;
+using JogoXadrez.Entidade.CamadaTabuleiro;
+using JogoXadrez.Entidade.CamadaTabuleiro.Enum;
 
 namespace JogoXadrez
 {

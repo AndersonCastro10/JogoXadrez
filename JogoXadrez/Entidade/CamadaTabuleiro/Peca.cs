@@ -1,6 +1,6 @@
-﻿using JogoXadrez.Entidade.Tabuleiro.Enum;
+﻿using JogoXadrez.Entidade.CamadaTabuleiro.Enum;
 
-namespace JogoXadrez.Entidade.Tabuleiro
+namespace JogoXadrez.Entidade.CamadaTabuleiro
 {
     class Peca
     {
@@ -9,9 +9,9 @@ namespace JogoXadrez.Entidade.Tabuleiro
         public int QtdMovimentos { get; protected set; }
         public Tabuleiro Tabuleiro { get; protected set; }
 
-        public Peca(Posicao posicao, Tabuleiro tabuleiro, Cor cor)
+        public Peca(Tabuleiro tabuleiro, Cor cor)
         {
-            Posicao = posicao;
+            Posicao = null;
             Cor = cor;
             QtdMovimentos = 0;
             Tabuleiro = tabuleiro;
