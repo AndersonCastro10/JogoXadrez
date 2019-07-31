@@ -23,6 +23,10 @@ namespace JogoXadrez
 
                 Tela.ImprimirTabuleiro(tabuleiro);
 
+                PosicaoXadrez posicaoXadrez = new PosicaoXadrez('b', 7);
+                Console.WriteLine(posicaoXadrez);
+                Console.WriteLine(posicaoXadrez.ToPosicao());
+
             }
             catch (TabuleiroExcecao e)
             {
