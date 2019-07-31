@@ -19,7 +19,7 @@ namespace JogoXadrez
 
                 tabuleiro.ColocarPeca(new Torre(tabuleiro, Cor.Preta), new Posicao(0, 0));
                 tabuleiro.ColocarPeca(new Torre(tabuleiro, Cor.Preta), new Posicao(0, 1));
-                tabuleiro.ColocarPeca(new Rei(tabuleiro, Cor.Preta), new Posicao(2, 7));
+                tabuleiro.ColocarPeca(new Rei(tabuleiro, Cor.Branca), new Posicao(2, 7));
 
                 Tela.ImprimirTabuleiro(tabuleiro);
 
