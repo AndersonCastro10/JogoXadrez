@@ -2,6 +2,7 @@
 using JogoXadrez.Entidade.CamadaTabuleiro;
 using JogoXadrez.Entidade.CamadaXadrez;
 using JogoXadrez.Entidade.CamadaTabuleiro.Enum;
+using JogoXadrez.Entidade.CamadaTabuleiro.Excecao;
 
 namespace JogoXadrez
 {
@@ -9,16 +10,26 @@ namespace JogoXadrez
     {
         static void Main(string[] args)
         {
-            Posicao posicao = new Posicao(1, 2);
-            Console.WriteLine(posicao);
+            try
+            {
+                Posicao posicao = new Posicao(1, 2);
+                Console.WriteLine(posicao);
 
-            Tabuleiro tabuleiro = new Tabuleiro(8, 8);
+                Tabuleiro tabuleiro = new Tabuleiro(8, 8);
 
-            tabuleiro.ColocarPeca(new Torre(tabuleiro, Cor.Preta), new Posicao(0, 0));
-            tabuleiro.ColocarPeca(new Torre(tabuleiro, Cor.Preta), new Posicao(1, 3));
-            tabuleiro.ColocarPeca(new Rei(tabuleiro, Cor.Preta), new Posicao(2, 4));
+                tabuleiro.ColocarPeca(new Torre(tabuleiro, Cor.Preta), new Posicao(0, 0));
+                tabuleiro.ColocarPeca(new Torre(tabuleiro, Cor.Preta), new Posicao(0, 1));
+                tabuleiro.ColocarPeca(new Rei(tabuleiro, Cor.Preta), new Posicao(2, 7));
 
-            Tela.ImprimirTabuleiro(tabuleiro);
+                Tela.ImprimirTabuleiro(tabuleiro);
+
+            }
+            catch (TabuleiroExcecao e)
+            {
+
+                Console.WriteLine(e.Message); ;
+            }
+           
 
             Console.ReadLine();
 
