@@ -2,7 +2,7 @@
 
 namespace JogoXadrez.Entidade.CamadaTabuleiro
 {
-    class Peca
+    abstract class Peca
     {
         public Posicao Posicao { get; set; }
         public Cor Cor { get; set; }
@@ -23,5 +23,10 @@ namespace JogoXadrez.Entidade.CamadaTabuleiro
         {
             QtdMovimentos++;
         }
+
+        // Metodo que verifica as possiveis movimentações de uma peca, nessa clase o metodo será abstrato
+        // Pois assim será obrigatorio cada peca ter uma sobregarga desse metodo
+
+        public abstract bool[,] MovimentosPossiveis();
     }
 }

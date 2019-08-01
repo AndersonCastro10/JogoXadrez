@@ -15,6 +15,14 @@ namespace JogoXadrez.Entidade.CamadaTabuleiro
             Coluna = coluna;
         }
 
+        // Definir valores de uma posicao
+
+        public void DefinirValores(int linha, int coluna)
+        {
+            Linha = linha;
+            Coluna = coluna;
+        }
+
         public override string ToString()
         {
             return Linha
