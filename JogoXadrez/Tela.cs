@@ -1,6 +1,7 @@
 ﻿using System;
 using JogoXadrez.Entidade.CamadaTabuleiro;
 using JogoXadrez.Entidade.CamadaTabuleiro.Enum;
+using JogoXadrez.Entidade.CamadaXadrez;
 
 namespace JogoXadrez
 {
@@ -27,6 +28,16 @@ namespace JogoXadrez
                 Console.WriteLine();
             }
             Console.WriteLine("  a b c d e f g h");
+        }
+
+        // Metodo para ler do teclado do usuario a posição do Xadrez
+
+        public static PosicaoXadrez LerPosicaoXadrez()
+        {
+            string s = Console.ReadLine();
+            char coluna = s[0];
+            int linha = int.Parse(s[1].ToString());   // Preciso transformar em string porque o 1 caracter é char
+            return new PosicaoXadrez(coluna, linha);
         }
 
         public static void ImprimirPeca(Peca peca)

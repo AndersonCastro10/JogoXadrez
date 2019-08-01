@@ -41,6 +41,20 @@ namespace JogoXadrez.Entidade.CamadaTabuleiro
             peca.Posicao = posicao;
         }
 
+        // Retirar peca do tabuleiro
+
+        public Peca RetirarPeca(Posicao posicao)
+        {
+            if (ExistePeca(posicao) == false)   //Existe peca na posição? se falso retorna null
+            {
+                return null;
+            }
+            Peca aux = Peca(posicao);    // Recebe a peca que está na posição e guarda na variavel auxiliar
+            aux.Posicao = null;          // Agora a posicao da peça ficara null
+            Pecas[posicao.Linha, posicao.Coluna] = null;         // Posição no tabuleiro fica null (vazio)
+            return aux;                  // Retorno somente a peça, sem posição
+        }
+
         // Testar se a posição é valida 
         
         public bool TestarPosicao(Posicao posicao)

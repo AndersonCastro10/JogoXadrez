@@ -12,20 +12,21 @@ namespace JogoXadrez
         {
             try
             {
-                Posicao posicao = new Posicao(1, 2);
-                Console.WriteLine(posicao);
+               PartidaDeXadrez partida = new PartidaDeXadrez();
 
-                Tabuleiro tabuleiro = new Tabuleiro(8, 8);
+                while (!partida.Terminada)
+                {
+                    Console.Clear();
+                    Tela.ImprimirTabuleiro(partida.Tabuleiro);
 
-                tabuleiro.ColocarPeca(new Torre(tabuleiro, Cor.Preta), new Posicao(0, 0));
-                tabuleiro.ColocarPeca(new Torre(tabuleiro, Cor.Preta), new Posicao(0, 1));
-                tabuleiro.ColocarPeca(new Rei(tabuleiro, Cor.Branca), new Posicao(2, 7));
+                    Console.WriteLine();
+                    Console.Write("Digite a posição de origem : ");
+                    Posicao origem = Tela.LerPosicaoXadrez().ToPosicao();
+                    Console.Write("Digite a posição de destino : ");
+                    Posicao destino = Tela.LerPosicaoXadrez().ToPosicao();
 
-                Tela.ImprimirTabuleiro(tabuleiro);
-
-                PosicaoXadrez posicaoXadrez = new PosicaoXadrez('b', 7);
-                Console.WriteLine(posicaoXadrez);
-                Console.WriteLine(posicaoXadrez.ToPosicao());
+                    partida.ExecutaMovimento(origem, destino);
+                }
 
             }
             catch (TabuleiroExcecao e)

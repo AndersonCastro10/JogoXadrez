@@ -16,5 +16,12 @@ namespace JogoXadrez.Entidade.CamadaTabuleiro
             QtdMovimentos = 0;
             Tabuleiro = tabuleiro;
         }
+
+        // Incrementar a quantidade de movimentos da peça
+
+        public void IncrementarMovimentos()
+        {
+            QtdMovimentos++;
+        }
     }
 }
