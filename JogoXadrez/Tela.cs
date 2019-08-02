@@ -21,6 +21,35 @@ namespace JogoXadrez
             Console.WriteLine("  a b c d e f g h");
         }
 
+        // Metodos com o tabuleiro e posiçoes possiveis
+
+        public static void ImprimirTabuleiro(Tabuleiro tabuleiro, bool[,] posicoesPossiveis)
+        {
+            ConsoleColor fundoOriginal = Console.BackgroundColor; // Guardando o fundo original (no caso preto)
+            ConsoleColor fundoAlterado = ConsoleColor.DarkGray; // Guardando o fundo alterado (no caso cinza escuro)
+
+            for (int i = 0; i < tabuleiro.Linhas; i++)
+            {
+                Console.Write(8 - i + " ");
+                for (int j = 0; j < tabuleiro.Colunas; j++)
+                {
+                    if (posicoesPossiveis[i,j]) // se posição possivel for verdadeiro, altera o fundo para cinza, se não fica preto normal
+                    {
+                        Console.BackgroundColor = fundoAlterado;
+                    }
+                    else
+                    {
+                        Console.BackgroundColor = fundoOriginal;
+                    }
+                    ImprimirPeca(tabuleiro.Peca(i, j));
+                    Console.BackgroundColor = fundoOriginal; // Depois que imprimir a peca tenho que colocar o fundo original!
+                }
+                Console.WriteLine();
+            }
+            Console.WriteLine("  a b c d e f g h");
+            Console.BackgroundColor = fundoOriginal; // Para garantir que o fundo volte a ser original!
+        }
+
         // Metodo para ler do teclado do usuario a posição do Xadrez
 
         public static PosicaoXadrez LerPosicaoXadrez()
