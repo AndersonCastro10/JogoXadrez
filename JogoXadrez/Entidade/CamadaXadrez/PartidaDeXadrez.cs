@@ -9,8 +9,8 @@ namespace JogoXadrez.Entidade.CamadaXadrez
     class PartidaDeXadrez 
     {
         public Tabuleiro Tabuleiro { get; private set; }
-        private int Turno { get; set; }
-        private Cor JogadorAtual { get; set; }
+        public int Turno { get; private set; }
+        public Cor JogadorAtual { get; private set; }
         public bool Terminada { get; private set; }
 
         public PartidaDeXadrez()
@@ -30,6 +30,25 @@ namespace JogoXadrez.Entidade.CamadaXadrez
             peca.IncrementarMovimentos();                            // Incrementar a qtd de movimentos dessa peça
             Peca pecaCapturada = Tabuleiro.RetirarPeca(destino);     // Capturar peça que está no destino ou não, pode estar vazio
             Tabuleiro.ColocarPeca(peca, destino);                    // Colocar a peça no destino
+        }
+
+        public void RealizaJogada(Posicao origem, Posicao destino)
+        {
+            ExecutaMovimento(origem, destino);
+            Turno++; // Passar o turno
+            MudaJogador();
+        }
+
+        private void MudaJogador()
+        {
+            if (JogadorAtual == Cor.Branca)
+            {
+                JogadorAtual = Cor.Preta;
+            }
+            else
+            {
+                JogadorAtual = Cor.Branca;
+            }
         }
 
         private void ColocarPecas()
