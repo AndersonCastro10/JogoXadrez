@@ -28,5 +28,25 @@ namespace JogoXadrez.Entidade.CamadaTabuleiro
         // Pois assim será obrigatorio cada peca ter uma sobregarga desse metodo
 
         public abstract bool[,] MovimentosPossiveis();
+
+        // Metodo que verfica se existe os movimentos possiveis para uma determinada peca
+
+        public bool ExisteMovimentosPossiveis()
+        {
+            bool[,] matriz = MovimentosPossiveis();
+
+            for (int i = 0; i < Tabuleiro.Linhas; i++)
+            {
+                for (int j = 0; j < Tabuleiro.Colunas; j++)
+                {
+                    if (matriz[i,j])
+                    {
+                        return true;
+                    }
+                }
+            }
+
+            return false;
+        }
     }
 }
