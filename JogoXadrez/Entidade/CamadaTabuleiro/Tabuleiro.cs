@@ -16,7 +16,7 @@ namespace JogoXadrez.Entidade.CamadaTabuleiro
         }
 
         // dar acesso a uma peça individual, retornando uma peça em 
-        // um posição especifica
+        // uma posição especifica
 
         public Peca Peca(int linha, int coluna)
         {
@@ -25,7 +25,7 @@ namespace JogoXadrez.Entidade.CamadaTabuleiro
 
         public Peca Peca(Posicao posicao)
         {
-            return Pecas[posicao.Linha, posicao.Coluna];
+            return Pecas[posicao.Linha, posicao.Coluna]; //Precio implantar uma correção aqui, porque se eu escolher uma casa fora do tabuleiro irá dar erro
         }
 
         // Colocar uma peça no tabuleiro, e depois atribuir uma posição a minha peça

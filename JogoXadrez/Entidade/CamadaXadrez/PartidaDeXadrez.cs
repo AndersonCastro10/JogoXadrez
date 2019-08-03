@@ -1,6 +1,7 @@
 ﻿using System;
 using JogoXadrez.Entidade.CamadaTabuleiro;
 using JogoXadrez.Entidade.CamadaTabuleiro.Enum;
+using JogoXadrez.Entidade.CamadaTabuleiro.Excecao;
 
 namespace JogoXadrez.Entidade.CamadaXadrez
 {      
@@ -37,6 +38,30 @@ namespace JogoXadrez.Entidade.CamadaXadrez
             ExecutaMovimento(origem, destino);
             Turno++; // Passar o turno
             MudaJogador();
+        }
+
+        public void ValidarPosicaoDeOrigem(Posicao posicao)
+        {
+            if (Tabuleiro.Peca(posicao) == null) // Testa se existe peca na posiçao escolhida
+            {
+                throw new TabuleiroExcecao("Não existe peça na posição de origem escolhida");
+            }
+            if (JogadorAtual != Tabuleiro.Peca(posicao).Cor) // Teste se o jogador atual (cor) é diferente da peca que ele irá mover (cor)
+            {
+                throw new TabuleiroExcecao("A peça de origm escolhida não é sua!");
+            }
+            if (!Tabuleiro.Peca(posicao).ExisteMovimentosPossiveis()) //Testa se NÂO exite movimentos possiveis
+            {
+                throw new TabuleiroExcecao("Não há movimentos possíveis para a peça de origem escolhida");
+            }
+        }
+
+        public void ValidarPosicaoDeDestino(Posicao origem, Posicao destino)
+        {
+            if (!Tabuleiro.Peca(origem).PodeMoverPara(destino))
+            {
+                throw new TabuleiroExcecao("Posição de destino inválida!"); //Se a peça Não poder mover para o destino lança a exceção
+            }
         }
 
         private void MudaJogador()

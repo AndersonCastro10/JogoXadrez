@@ -48,5 +48,10 @@ namespace JogoXadrez.Entidade.CamadaTabuleiro
 
             return false;
         }
+
+        public bool PodeMoverPara(Posicao posicao)
+        {
+            return MovimentosPossiveis()[posicao.Linha, posicao.Coluna];
+        }
     }
 }
