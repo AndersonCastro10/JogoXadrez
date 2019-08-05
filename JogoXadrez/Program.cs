@@ -19,10 +19,7 @@ namespace JogoXadrez
                     try
                     {
                         Console.Clear();
-                        Tela.ImprimirTabuleiro(partida.Tabuleiro);
-                        Console.WriteLine();
-                        Console.WriteLine("Turno : " + partida.Turno);
-                        Console.WriteLine("Aguardando jogado : " + partida.JogadorAtual);
+                        Tela.ImprimirPartida(partida);
 
                         Console.WriteLine();
                         Console.Write("Digite a posição de origem : ");
@@ -47,7 +44,11 @@ namespace JogoXadrez
                         Console.WriteLine(e.Message);
                         Console.ReadLine();
                     }
-                    
+                    catch(Exception)
+                    {
+                        Console.WriteLine("Valor inválido, por favor jogue novamente!");
+                        Console.ReadLine();
+                    }
                 }
 
             }

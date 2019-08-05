@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using JogoXadrez.Entidade.CamadaTabuleiro;
 using JogoXadrez.Entidade.CamadaTabuleiro.Enum;
 using JogoXadrez.Entidade.CamadaXadrez;
@@ -7,6 +8,43 @@ namespace JogoXadrez
 {
     class Tela
     {
+
+        // Metodo para imprimir a partida na tela
+
+        public static void ImprimirPartida(PartidaDeXadrez partida)
+        {
+            ImprimirTabuleiro(partida.Tabuleiro);
+            Console.WriteLine();
+            ImprimirPecasCapturadas(partida);
+            Console.WriteLine();
+            Console.WriteLine("Turno : " + partida.Turno);
+            Console.WriteLine("Aguardando jogado : " + partida.JogadorAtual);
+        }
+
+        public static void ImprimirPecasCapturadas(PartidaDeXadrez partida)
+        {
+            Console.WriteLine("Pecas capturadas");
+            Console.Write(" Brancas: ");
+            ImprimirConjunto(partida.CorPecasCapturadas(Cor.Branca));
+            Console.WriteLine();
+            Console.Write(" Pretas: ");
+            ConsoleColor aux = Console.ForegroundColor;
+            Console.ForegroundColor = ConsoleColor.DarkYellow;
+            ImprimirConjunto(partida.CorPecasCapturadas(Cor.Preta));
+            Console.ForegroundColor = aux;
+            Console.WriteLine();
+        }
+
+        private static void ImprimirConjunto(HashSet<Peca> conjunto)
+        {
+            Console.Write("[ ");
+            foreach (Peca peca in conjunto)
+            {
+                Console.Write(peca + ", ");
+            }
+            Console.Write("]");
+        }
+
         public static void ImprimirTabuleiro(Tabuleiro tabuleiro)
         {
             for (int i = 0; i < tabuleiro.Linhas; i++)
