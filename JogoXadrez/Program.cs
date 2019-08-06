@@ -22,7 +22,7 @@ namespace JogoXadrez
                         Tela.ImprimirPartida(partida);
 
                         Console.WriteLine();
-                        Console.Write("Digite a posição de origem : ");
+                        Console.Write("Digite a posição de origem (letra numero): ");
                         Posicao origem = Tela.LerPosicaoXadrez().ToPosicao();
                         partida.ValidarPosicaoDeOrigem(origem);
 
@@ -32,7 +32,7 @@ namespace JogoXadrez
                         Tela.ImprimirTabuleiro(partida.Tabuleiro, posicoesPossiveis);
 
                         Console.WriteLine();
-                        Console.Write("Digite a posição de destino : ");
+                        Console.Write("Digite a posição de destino (letra numero): ");
                         Posicao destino = Tela.LerPosicaoXadrez().ToPosicao();
                         partida.ValidarPosicaoDeDestino(origem, destino);
 
@@ -50,7 +50,8 @@ namespace JogoXadrez
                         Console.ReadLine();
                     }
                 }
-
+                Console.Clear();
+                Tela.ImprimirPartida(partida);
             }
             catch (TabuleiroExcecao e)
             {

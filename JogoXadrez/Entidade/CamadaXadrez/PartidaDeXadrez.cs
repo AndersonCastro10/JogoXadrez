@@ -80,8 +80,15 @@ namespace JogoXadrez.Entidade.CamadaXadrez
                 Xeque = false;
             }
 
-            Turno++; // Passar o turno
-            MudaJogador();
+            if (TestaXequeMate(Adversaria(JogadorAtual))) // Se o jogador atual (cor) está em xeque mate
+            {
+                Terminada = true;
+            }
+            else
+            {
+                Turno++; // Passar o turno
+                MudaJogador();
+            }
         }
 
         public void ValidarPosicaoDeOrigem(Posicao posicao)
@@ -203,6 +210,41 @@ namespace JogoXadrez.Entidade.CamadaXadrez
             return false;
         }
 
+        // Metodo que verifica se está em xeque mate
+
+        public bool TestaXequeMate(Cor cor)
+        {
+            if (!EstaEmXeque(cor))
+            {
+                return false;
+            }
+
+            foreach (Peca peca in PecasEmJogo(cor))  // Percorre todas as pecas que estão em jogo da cor passada no parametro, preciso achar uma peca que movendo tira do xeque
+            {
+                bool[,] matriz = peca.MovimentosPossiveis(); //Pega todos os movimentos possiveis de cada peca
+
+                for (int i = 0; i < Tabuleiro.Linhas; i++) // vou percorrer o tabuleiro inteiro e para cada movimento possivel, tenho que ver se tira do xeque , percorrendo linha
+                {
+                    for (int j = 0; j < Tabuleiro.Colunas; j++) // Percorrendo colunas
+                    {
+                        if (matriz[i,j]) // Se a matriz na possição i,j estiver marcada como verdadeira, ou seja, é um movimento possivel daquela peca
+                        {
+                            Posicao origem = peca.Posicao;
+                            Posicao destino = new Posicao(i, j); // guardo o destino , para facilitar o codigo abaixo
+                            Peca pecaCapturada = ExecutaMovimento(origem, destino); // Movimento a peca para esse lugar que ela poderá ir
+                            bool estaEmXeque = EstaEmXeque(cor);                           // Ai depois que movimentei vou ver se ainda o rei está em xeque
+                            DesfazMovimento(origem, destino, pecaCapturada);        // Desfaço o movimento que fiz anteriormente
+                            if (!estaEmXeque)  // Se o rei não estiver em xeque, retorno false
+                            {
+                                return false;
+                            }
+                        }
+                    }
+                }
+            }
+            return true; // Se depois de testar todas as pecas, todos os movimentos possiveis e nada tira o rei do xeque, então é true, ou seja, xeque mate
+        }
+
         // Metodo que coloca nova peca no Tabuleiro em uma nova posicao
 
         public void ColocarNovaPeca(char coluna, int linha, Peca peca)
@@ -214,18 +256,19 @@ namespace JogoXadrez.Entidade.CamadaXadrez
         private void ColocarPecas()
         {
             ColocarNovaPeca('c', 1, new Torre(Tabuleiro, Cor.Branca));
-            ColocarNovaPeca('c', 2, new Torre(Tabuleiro, Cor.Branca));
-            ColocarNovaPeca('d', 2, new Torre(Tabuleiro, Cor.Branca));
-            ColocarNovaPeca('e', 2, new Torre(Tabuleiro, Cor.Branca));
-            ColocarNovaPeca('e', 1, new Torre(Tabuleiro, Cor.Branca));
             ColocarNovaPeca('d', 1, new Rei(Tabuleiro, Cor.Branca));
+            ColocarNovaPeca('h', 7, new Torre(Tabuleiro, Cor.Branca));
 
-            ColocarNovaPeca('c', 7, new Torre(Tabuleiro, Cor.Preta));
-            ColocarNovaPeca('c', 8, new Torre(Tabuleiro, Cor.Preta));
-            ColocarNovaPeca('d', 7, new Torre(Tabuleiro, Cor.Preta));
-            ColocarNovaPeca('e', 7, new Torre(Tabuleiro, Cor.Preta));
-            ColocarNovaPeca('e', 8, new Torre(Tabuleiro, Cor.Preta));
-            ColocarNovaPeca('d', 8, new Rei(Tabuleiro, Cor.Preta));
+            ColocarNovaPeca('a', 8, new Rei(Tabuleiro, Cor.Preta));
+            ColocarNovaPeca('b', 8, new Torre(Tabuleiro, Cor.Preta));
+            //ColocarNovaPeca('d', 1, new Rei(Tabuleiro, Cor.Branca));
+
+            //ColocarNovaPeca('c', 7, new Torre(Tabuleiro, Cor.Preta));
+            //ColocarNovaPeca('c', 8, new Torre(Tabuleiro, Cor.Preta));
+            //ColocarNovaPeca('d', 7, new Torre(Tabuleiro, Cor.Preta));
+            //ColocarNovaPeca('e', 7, new Torre(Tabuleiro, Cor.Preta));
+            //ColocarNovaPeca('e', 8, new Torre(Tabuleiro, Cor.Preta));
+            //ColocarNovaPeca('d', 8, new Rei(Tabuleiro, Cor.Preta));
         }
     }
 }
