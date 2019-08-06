@@ -24,6 +24,13 @@ namespace JogoXadrez.Entidade.CamadaTabuleiro
             QtdMovimentos++;
         }
 
+        // Decrementar a quantidade de movimentos da peça
+
+        public void DecrementarMovimentos()
+        {
+            QtdMovimentos--;
+        }
+
         // Metodo que verifica as possiveis movimentações de uma peca, nessa clase o metodo será abstrato
         // Pois assim será obrigatorio cada peca ter uma sobregarga desse metodo
 

@@ -25,12 +25,12 @@ namespace JogoXadrez
         {
             Console.WriteLine("Pecas capturadas");
             Console.Write(" Brancas: ");
-            ImprimirConjunto(partida.CorPecasCapturadas(Cor.Branca));
+            ImprimirConjunto(partida.PecasCapturadas(Cor.Branca));
             Console.WriteLine();
             Console.Write(" Pretas: ");
             ConsoleColor aux = Console.ForegroundColor;
             Console.ForegroundColor = ConsoleColor.DarkYellow;
-            ImprimirConjunto(partida.CorPecasCapturadas(Cor.Preta));
+            ImprimirConjunto(partida.PecasCapturadas(Cor.Preta));
             Console.ForegroundColor = aux;
             Console.WriteLine();
         }

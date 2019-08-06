@@ -15,6 +15,7 @@ namespace JogoXadrez.Entidade.CamadaXadrez
         public bool Terminada { get; private set; }
         private HashSet<Peca> ConjuntoPecasNova;
         private HashSet<Peca> ConjuntoPecasCapturada;
+        public bool Xeque { get; private set; }
 
         public PartidaDeXadrez()
         {
@@ -22,6 +23,7 @@ namespace JogoXadrez.Entidade.CamadaXadrez
             Turno = 1;
             JogadorAtual = Cor.Branca;
             Terminada = false;
+            Xeque = false;
             ConjuntoPecasNova = new HashSet<Peca>();
             ConjuntoPecasCapturada = new HashSet<Peca>();
             ColocarPecas();
@@ -29,7 +31,7 @@ namespace JogoXadrez.Entidade.CamadaXadrez
 
         // Metodo para executar um movimento
 
-        public void ExecutaMovimento(Posicao origem, Posicao destino)
+        public Peca ExecutaMovimento(Posicao origem, Posicao destino)
         {
             Peca peca = Tabuleiro.RetirarPeca(origem);               // Retirar a peça da origem, estou mexendo essa peça
             peca.IncrementarMovimentos();                            // Incrementar a qtd de movimentos dessa peça
@@ -37,12 +39,47 @@ namespace JogoXadrez.Entidade.CamadaXadrez
             Tabuleiro.ColocarPeca(peca, destino);                    // Colocar a peça no destino
             if (pecaCapturada != null)                               // Se existir uma peca no local de destino ela será capturada
             {
-                ConjuntoPecasCapturada.Add(pecaCapturada);
+                ConjuntoPecasCapturada.Add(pecaCapturada);           // Adciona ao conjunto de pecas capturadas
             }
+            return pecaCapturada;                                   // Retorna a peca capturada
         }
+
+        // Metodo que desfaz a jogada
+
+        public void DesfazMovimento(Posicao origem, Posicao destino, Peca pecaCapturada)
+        {
+            Peca peca = Tabuleiro.RetirarPeca(destino);   // Retira a peca que foi para o destino
+            peca.DecrementarMovimentos(); // Tira a quantidade feita no movimento
+            if (pecaCapturada != null)    // Se existir uma peça capturada, preciso devolver ela no lugar do destino
+            {
+                Tabuleiro.ColocarPeca(pecaCapturada, destino);  // Coloca peca de volta, ela estava no destino
+                ConjuntoPecasCapturada.Remove(pecaCapturada);   // Remove a peca capturada do conjunto de pecas capturadas
+            }
+            Tabuleiro.ColocarPeca(peca, origem); // Colocar peca na posição de origem
+
+        }
+
+        // Metodo que realiza a jogada, verificando se o rei não ficará em xeque, se ficar, tem que desfazer a jogada
 
         public void RealizaJogada(Posicao origem, Posicao destino)
         {
+            Peca pecaCapturada = ExecutaMovimento(origem, destino); // Guardo a peca capturada (se tiver alguma) para depois desfazer o movimento, caso o rei fique em xeque
+
+            if (EstaEmXeque(JogadorAtual))
+            {
+                DesfazMovimento(origem, destino, pecaCapturada);
+                throw new TabuleiroExcecao("Você não pode se colocar em xeque!");
+            }
+
+            if (EstaEmXeque(Adversaria(JogadorAtual)))  // Se a cor adversaria entre em xeque
+            {
+                Xeque = true;
+            }
+            else
+            {
+                Xeque = false;
+            }
+
             ExecutaMovimento(origem, destino);
             Turno++; // Passar o turno
             MudaJogador();
@@ -89,7 +126,7 @@ namespace JogoXadrez.Entidade.CamadaXadrez
 
         // Metodo para retornar um conjunto de peca capturadas dada uma cor 
         
-        public HashSet<Peca> CorPecasCapturadas(Cor cor)
+        public HashSet<Peca> PecasCapturadas(Cor cor)
         {
             HashSet<Peca> aux = new HashSet<Peca>();              // Cria um conjunto de pecas auxiliar
             foreach (Peca peca in ConjuntoPecasCapturada)         // Percorre peca no Conjunto de pecas capturadas
@@ -104,7 +141,7 @@ namespace JogoXadrez.Entidade.CamadaXadrez
 
         // Metodo para retornar um conjunto de peca do jogo dada uma cor 
 
-        public HashSet<Peca> CorPecasEmJogo(Cor cor)
+        public HashSet<Peca> PecasEmJogo(Cor cor)
         {
             HashSet<Peca> aux = new HashSet<Peca>();              // Cria um conjunto de pecas auxiliar
             foreach (Peca peca in ConjuntoPecasNova)              // Percorre peca no Conjunto de pecas em jogo (novas)
@@ -114,8 +151,57 @@ namespace JogoXadrez.Entidade.CamadaXadrez
                     aux.Add(peca);
                 }
             }
-            aux.ExceptWith(CorPecasCapturadas(cor));            // irá Pega todas as peças, exceto as que foram capturadas dessa cor
+            aux.ExceptWith(PecasCapturadas(cor));            // irá Pega todas as peças, exceto as que foram capturadas dessa cor
             return aux;                                         // Retorna conjunto auxiliar 
+        }
+
+        // Metodo para retornar a cor adversaria
+
+        private Cor Adversaria (Cor cor)
+        {
+            if (cor == Cor.Branca)
+            {
+                return Cor.Preta;
+            }
+            else
+            {
+                return Cor.Branca;
+            }
+        }
+
+        // Metodo para retornar uma rei de uma dada cor
+
+        private Peca Rei(Cor cor)
+        {
+            foreach (Peca peca in PecasEmJogo(cor))  // Percorrer todas as pecas do jogo até achar uma rei
+            {
+                if (peca is Rei)            // Se a peca pertence a subClasse Rei, retorna a peca, no caso o Rei
+                {
+                    return peca;
+                }
+            }
+            return null;   // Se não achar o rei é porque tem algo errado, mas tenho que colocar o retur null para não deixar com erro.
+        }
+
+        // Metodo que retorna se o rei está em xeque
+
+        public bool EstaEmXeque(Cor cor)
+        {
+            Peca r = Rei(cor);   // Pega o rei da cor adversaria
+            if (r == null)      // Se não tiver rei, lança uma excecao
+            {
+                throw new TabuleiroExcecao("Não tem Rei da cor " + cor + "no tabuleiro!");
+            }
+
+            foreach (Peca peca in PecasEmJogo(Adversaria(cor)))   //Para cada peca que está nas pecas adversarias que ainda esta em jogo
+            {
+                bool[,] matriz = peca.MovimentosPossiveis();
+                if (matriz[r.Posicao.Linha,r.Posicao.Coluna])  // Se na matriz de movimentos possiveis da peca adversaria (peca), se na posicao onde estiver o rei estiver verdadeiro é porque ele está em xeque 
+                {
+                    return true;
+                }
+            }
+            return false;
         }
 
         // Metodo que coloca nova peca no Tabuleiro em uma nova posicao
