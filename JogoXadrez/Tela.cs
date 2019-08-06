@@ -19,6 +19,10 @@ namespace JogoXadrez
             Console.WriteLine();
             Console.WriteLine("Turno : " + partida.Turno);
             Console.WriteLine("Aguardando jogado : " + partida.JogadorAtual);
+            if (partida.Xeque)
+            {
+                Console.WriteLine("XEQUE!");
+            }
         }
 
         public static void ImprimirPecasCapturadas(PartidaDeXadrez partida)
@@ -94,7 +98,7 @@ namespace JogoXadrez
         {
             string s = Console.ReadLine();
             char coluna = s[0];
-            int linha = int.Parse(s[1].ToString());   // Preciso transformar em string porque o 1 caracter é char
+            int linha = int.Parse(s.Substring(1).ToString());   // Preciso transformar em string porque o 1 caracter é char, coloquei substring porque pode ser digitado um valor fora do tabuleiro, ex c22
             return new PosicaoXadrez(coluna, linha);
         }
 

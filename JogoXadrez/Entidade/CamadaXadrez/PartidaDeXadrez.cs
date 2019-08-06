@@ -80,7 +80,6 @@ namespace JogoXadrez.Entidade.CamadaXadrez
                 Xeque = false;
             }
 
-            ExecutaMovimento(origem, destino);
             Turno++; // Passar o turno
             MudaJogador();
         }
