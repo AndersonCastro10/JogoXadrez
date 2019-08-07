@@ -261,6 +261,7 @@ namespace JogoXadrez.Entidade.CamadaXadrez
 
             ColocarNovaPeca('a', 8, new Rei(Tabuleiro, Cor.Preta));
             ColocarNovaPeca('b', 8, new Torre(Tabuleiro, Cor.Preta));
+            ColocarNovaPeca('b', 5, new Bispo(Tabuleiro, Cor.Preta));
             //ColocarNovaPeca('d', 1, new Rei(Tabuleiro, Cor.Branca));
 
             //ColocarNovaPeca('c', 7, new Torre(Tabuleiro, Cor.Preta));

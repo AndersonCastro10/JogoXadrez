@@ -20,7 +20,6 @@ namespace JogoXadrez.Entidade.CamadaXadrez
         {
             Peca peca = Tabuleiro.Peca(posicao);    // Recebe uma peca de uma posicao
             return peca == null || peca.Cor != Cor; // Verifica se a peca existe ou se é diferente da cor da peca que está se movendo
-
         }
 
 
