@@ -34,14 +34,14 @@ namespace JogoXadrez.Entidade.CamadaXadrez
 
             if (Cor == Cor.Branca)
             {
-                posicao.DefinirValores(posicao.Linha - 1, posicao.Coluna); // Peça branca só anda para cima
+                posicao.DefinirValores(Posicao.Linha - 1, Posicao.Coluna); // Peça branca só anda para cima
                 if (Tabuleiro.TestarPosicao(posicao) && Livre(posicao))    // Se a posição está ok e está livre
                 {
                     matriz[posicao.Linha, posicao.Coluna] = true;
 
                     if (QtdMovimentos == 0)
                     {
-                        posicao.DefinirValores(posicao.Linha - 2, posicao.Coluna);
+                        posicao.DefinirValores(Posicao.Linha - 2, Posicao.Coluna);
                         if (Tabuleiro.TestarPosicao(posicao) && Livre(posicao))    // Se a posição está ok e está livre e se for o primeiro movimento do peão 
                         {
                             matriz[posicao.Linha, posicao.Coluna] = true;
@@ -52,7 +52,7 @@ namespace JogoXadrez.Entidade.CamadaXadrez
 
                 // Verificar o lado superior esquerdo se existe inimigo
 
-                posicao.DefinirValores(posicao.Linha - 1, posicao.Coluna - 1);
+                posicao.DefinirValores(Posicao.Linha - 1, Posicao.Coluna - 1);
                 if (Tabuleiro.TestarPosicao(posicao) && ExisteInimigo(posicao))
                 {
                     matriz[posicao.Linha, posicao.Coluna] = true;
@@ -60,7 +60,7 @@ namespace JogoXadrez.Entidade.CamadaXadrez
 
                 // Verificar o lado superior direito se existe inimigo
 
-                posicao.DefinirValores(posicao.Linha - 1, posicao.Coluna + 1);
+                posicao.DefinirValores(Posicao.Linha - 1, Posicao.Coluna + 1);
                 if (Tabuleiro.TestarPosicao(posicao) && ExisteInimigo(posicao))
                 {
                     matriz[posicao.Linha, posicao.Coluna] = true;
@@ -69,14 +69,14 @@ namespace JogoXadrez.Entidade.CamadaXadrez
 
             else
             {
-                posicao.DefinirValores(posicao.Linha + 1, posicao.Coluna); // Peça branca só anda para baixo
+                posicao.DefinirValores(Posicao.Linha + 1, Posicao.Coluna); // Peça branca só anda para baixo
                 if (Tabuleiro.TestarPosicao(posicao) && Livre(posicao))    // Se a posição está ok e está livre
                 {
                     matriz[posicao.Linha, posicao.Coluna] = true;
 
                     if (QtdMovimentos == 0)
                     {
-                        posicao.DefinirValores(posicao.Linha + 2, posicao.Coluna);
+                        posicao.DefinirValores(Posicao.Linha + 2, Posicao.Coluna);
                         if (Tabuleiro.TestarPosicao(posicao) && Livre(posicao))    // Se a posição está ok e está livre e se for o primeiro movimento do peão 
                         {
                             matriz[posicao.Linha, posicao.Coluna] = true;
@@ -87,7 +87,7 @@ namespace JogoXadrez.Entidade.CamadaXadrez
 
                 // Verificar o lado superior esquerdo se existe inimigo
 
-                posicao.DefinirValores(posicao.Linha + 1, posicao.Coluna - 1);
+                posicao.DefinirValores(Posicao.Linha + 1, Posicao.Coluna - 1);
                 if (Tabuleiro.TestarPosicao(posicao) && ExisteInimigo(posicao))
                 {
                     matriz[posicao.Linha, posicao.Coluna] = true;
@@ -95,7 +95,7 @@ namespace JogoXadrez.Entidade.CamadaXadrez
 
                 // Verificar o lado superior direito se existe inimigo
 
-                posicao.DefinirValores(posicao.Linha + 1, posicao.Coluna + 1);
+                posicao.DefinirValores(Posicao.Linha + 1, Posicao.Coluna + 1);
                 if (Tabuleiro.TestarPosicao(posicao) && ExisteInimigo(posicao))
                 {
                     matriz[posicao.Linha, posicao.Coluna] = true;
