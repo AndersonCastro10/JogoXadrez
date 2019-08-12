@@ -41,7 +41,36 @@ namespace JogoXadrez.Entidade.CamadaXadrez
             {
                 ConjuntoPecasCapturada.Add(pecaCapturada);           // Adciona ao conjunto de pecas capturadas
             }
-            return pecaCapturada;                                   // Retorna a peca capturada
+            // return pecaCapturada;                                   // Retorna a peca capturada
+
+            // Implantar o Roque 
+
+            if (peca is Rei && peca.QtdMovimentos == 0) // Testa se a peça é um rei e se é seu primeiro movimento
+            {
+                // Roque pequeno
+                if (destino.Coluna == origem.Coluna+2) // Se o rei andou para a direita duas casas, quer dizer que é o roque pequeno
+                {
+                    Posicao origemTorre = new Posicao(origem.Linha, origem.Coluna + 3); // Irá pegar a posição que está a 3 casas a direita do rei (posição de origem, Torre)
+                    Posicao destinoTorre = new Posicao(origem.Linha, origem.Coluna + 1); // Irá pegar a posição que está a 1 casas a direita do rei (posição de destino, Torre)
+
+                    Peca torre = Tabuleiro.RetirarPeca(origemTorre); // Pega a peça que está na posição de origem 
+                    torre.IncrementarMovimentos();                   // Incrementa o movimento
+                    Tabuleiro.ColocarPeca(torre, destinoTorre);      // E coloca a peca na posição de destina instaciada acima
+                }
+
+                // Roque grande
+                if (destino.Coluna == origem.Coluna - 2)
+                {
+                    Posicao origemTorre = new Posicao(origem.Linha, origem.Coluna - 4);
+                    Posicao destinoTorre = new Posicao(origem.Linha, origem.Coluna - 1);
+
+                    Peca torre = Tabuleiro.RetirarPeca(origemTorre);
+                    torre.IncrementarMovimentos();
+                    Tabuleiro.ColocarPeca(torre, destinoTorre);
+                }
+            }
+
+            return pecaCapturada;
         }
 
         // Metodo que desfaz a jogada
@@ -56,6 +85,31 @@ namespace JogoXadrez.Entidade.CamadaXadrez
                 ConjuntoPecasCapturada.Remove(pecaCapturada);   // Remove a peca capturada do conjunto de pecas capturadas
             }
             Tabuleiro.ColocarPeca(peca, origem); // Colocar peca na posição de origem
+
+            if (peca is Rei && peca.QtdMovimentos == 0)
+            {
+                // Roque pequeno
+                if (destino.Coluna == origem.Coluna + 2)
+                {
+                    Posicao origemTorre = new Posicao(origem.Linha, origem.Coluna + 3);
+                    Posicao destinoTorre = new Posicao(origem.Linha, origem.Coluna + 1);
+
+                    Peca torre = Tabuleiro.RetirarPeca(destinoTorre);
+                    torre.DecrementarMovimentos();
+                    Tabuleiro.ColocarPeca(torre, origemTorre);
+                }
+
+                // Roque grande
+                if (destino.Coluna == origem.Coluna - 2)
+                {
+                    Posicao origemTorre = new Posicao(origem.Linha, origem.Coluna - 4);
+                    Posicao destinoTorre = new Posicao(origem.Linha, origem.Coluna - 1);
+
+                    Peca torre = Tabuleiro.RetirarPeca(destinoTorre);
+                    torre.DecrementarMovimentos();
+                    Tabuleiro.ColocarPeca(torre, origemTorre);
+                }
+            }
 
         }
 
