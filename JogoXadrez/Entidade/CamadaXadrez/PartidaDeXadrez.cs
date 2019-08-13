@@ -45,10 +45,10 @@ namespace JogoXadrez.Entidade.CamadaXadrez
 
             // Implantar o Roque 
 
-            if (peca is Rei && peca.QtdMovimentos == 0) // Testa se a peça é um rei e se é seu primeiro movimento
+            if (peca is Rei ) // Testa se a peça é um rei , se é o primeiro movimento ja foi testado na classe
             {
                 // Roque pequeno
-                if (destino.Coluna == origem.Coluna+2) // Se o rei andou para a direita duas casas, quer dizer que é o roque pequeno
+                if (destino.Coluna == origem.Coluna + 2) // Se o rei andou para a direita duas casas, quer dizer que é o roque pequeno
                 {
                     Posicao origemTorre = new Posicao(origem.Linha, origem.Coluna + 3); // Irá pegar a posição que está a 3 casas a direita do rei (posição de origem, Torre)
                     Posicao destinoTorre = new Posicao(origem.Linha, origem.Coluna + 1); // Irá pegar a posição que está a 1 casas a direita do rei (posição de destino, Torre)
@@ -86,7 +86,7 @@ namespace JogoXadrez.Entidade.CamadaXadrez
             }
             Tabuleiro.ColocarPeca(peca, origem); // Colocar peca na posição de origem
 
-            if (peca is Rei && peca.QtdMovimentos == 0)
+            if (peca is Rei )
             {
                 // Roque pequeno
                 if (destino.Coluna == origem.Coluna + 2)
@@ -310,10 +310,10 @@ namespace JogoXadrez.Entidade.CamadaXadrez
         private void ColocarPecas()
         {
             ColocarNovaPeca('a', 1, new Torre(Tabuleiro, Cor.Branca));
-            ColocarNovaPeca('b', 1, new Cavalo(Tabuleiro, Cor.Branca));
-            ColocarNovaPeca('c', 1, new Bispo(Tabuleiro, Cor.Branca));
-            ColocarNovaPeca('d', 1, new Dama(Tabuleiro, Cor.Branca));
-            ColocarNovaPeca('e', 1, new Rei(Tabuleiro, Cor.Branca));
+            //ColocarNovaPeca('b', 1, new Cavalo(Tabuleiro, Cor.Branca));
+            //ColocarNovaPeca('c', 1, new Bispo(Tabuleiro, Cor.Branca));
+            //ColocarNovaPeca('d', 1, new Dama(Tabuleiro, Cor.Branca));
+            ColocarNovaPeca('e', 1, new Rei(Tabuleiro, Cor.Branca, this)); // Passando a partida para o rei
             ColocarNovaPeca('f', 1, new Bispo(Tabuleiro, Cor.Branca));
             ColocarNovaPeca('g', 1, new Cavalo(Tabuleiro, Cor.Branca));
             ColocarNovaPeca('h', 1, new Torre(Tabuleiro, Cor.Branca));
@@ -330,7 +330,7 @@ namespace JogoXadrez.Entidade.CamadaXadrez
             ColocarNovaPeca('b', 8, new Cavalo(Tabuleiro, Cor.Preta));
             ColocarNovaPeca('c', 8, new Bispo(Tabuleiro, Cor.Preta));
             ColocarNovaPeca('d', 8, new Dama(Tabuleiro, Cor.Preta));
-            ColocarNovaPeca('e', 8, new Rei(Tabuleiro, Cor.Preta));
+            ColocarNovaPeca('e', 8, new Rei(Tabuleiro, Cor.Preta, this)); // Passando a partida para o rei
             ColocarNovaPeca('f', 8, new Bispo(Tabuleiro, Cor.Preta));
             ColocarNovaPeca('g', 8, new Cavalo(Tabuleiro, Cor.Preta));
             ColocarNovaPeca('h', 8, new Torre(Tabuleiro, Cor.Preta));
