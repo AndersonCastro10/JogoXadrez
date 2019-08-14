@@ -5,8 +5,11 @@ namespace JogoXadrez.Entidade.CamadaXadrez
 {
     class Peao : Peca
     {
-        public Peao(Tabuleiro tabuleiro, Cor cor) : base(tabuleiro, cor)
+        private PartidaDeXadrez Partida;
+
+        public Peao(Tabuleiro tabuleiro, Cor cor, PartidaDeXadrez partida) : base(tabuleiro, cor)
         {
+            Partida = partida;
         }
 
         public override string ToString()
@@ -65,6 +68,22 @@ namespace JogoXadrez.Entidade.CamadaXadrez
                 {
                     matriz[posicao.Linha, posicao.Coluna] = true;
                 }
+
+                // En Passant
+
+                if (posicao.Linha == 3 ) // o en passant da branca só acontece na linha 3, contando de cima para baixo
+                {
+                    Posicao esquerda = new Posicao(posicao.Linha, posicao.Coluna - 1);
+                    if (Tabuleiro.TestarPosicao(esquerda) && ExisteInimigo(esquerda) && Tabuleiro.Peca(esquerda) == Partida.VulneravelEnPassant) // Testa se a posição é valida, se tem um inimigo la e se a peca é a peca que está vulneravel, no caso somente o peao pode ficar vulneravel
+                    {
+                        matriz[esquerda.Linha - 1, esquerda.Coluna] = true;
+                    }
+                    Posicao direita = new Posicao(posicao.Linha, posicao.Coluna + 1);
+                    if (Tabuleiro.TestarPosicao(direita) && ExisteInimigo(direita) && Tabuleiro.Peca(direita) == Partida.VulneravelEnPassant) // Testa se a posição é valida, se tem um inimigo la e se a peca é a peca que está vulneravel, no caso somente o peao pode ficar vulneravel
+                    {
+                        matriz[direita.Linha - 1, direita.Coluna] = true;
+                    }
+                }
             }
 
             else
@@ -99,6 +118,22 @@ namespace JogoXadrez.Entidade.CamadaXadrez
                 if (Tabuleiro.TestarPosicao(posicao) && ExisteInimigo(posicao))
                 {
                     matriz[posicao.Linha, posicao.Coluna] = true;
+                }
+
+                // En Passant
+
+                if (posicao.Linha == 4) // o en passant da preta só acontece na linha 4, contando de cima para baixo
+                {
+                    Posicao esquerda = new Posicao(posicao.Linha, posicao.Coluna - 1);
+                    if (Tabuleiro.TestarPosicao(esquerda) && ExisteInimigo(esquerda) && Tabuleiro.Peca(esquerda) == Partida.VulneravelEnPassant) // Testa se a posição é valida, se tem um inimigo la e se a peca é a peca que está vulneravel, no caso somente o peao pode ficar vulneravel
+                    {
+                        matriz[esquerda.Linha + 1, esquerda.Coluna] = true;
+                    }
+                    Posicao direita = new Posicao(posicao.Linha, posicao.Coluna + 1);
+                    if (Tabuleiro.TestarPosicao(direita) && ExisteInimigo(direita) && Tabuleiro.Peca(direita) == Partida.VulneravelEnPassant) // Testa se a posição é valida, se tem um inimigo la e se a peca é a peca que está vulneravel, no caso somente o peao pode ficar vulneravel
+                    {
+                        matriz[direita.Linha + 1, direita.Coluna] = true;
+                    }
                 }
             }
 
