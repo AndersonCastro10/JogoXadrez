@@ -166,6 +166,23 @@ namespace JogoXadrez.Entidade.CamadaXadrez
                 throw new TabuleiroExcecao("Você não pode se colocar em xeque!");
             }
 
+            Peca peca = Tabuleiro.Peca(destino); // Qual peça foi movida? 
+
+            // Jogada especial promocao do peao quando cehgar na ultima casa 
+
+            if (peca is Peao)
+            {
+                if ((peca.Cor == Cor.Branca && destino.Linha == 0) || (peca.Cor == Cor.Preta && destino.Linha == 7)) // Pao da cor branca chegou na ultima linha do tabuleiro ou peao preto que chegou na ultima linha 
+                {
+                    peca = Tabuleiro.RetirarPeca(destino); // Retirar a peca da posicao de destino
+                    ConjuntoPecasNova.Remove(peca); // Remove peca do jogo
+                    Peca dama = new Dama(Tabuleiro, peca.Cor); // Ja coloca a Dama de vez, sem deixar o usuario escolher
+                    Tabuleiro.ColocarPeca(dama, destino);
+                    ConjuntoPecasNova.Add(dama); // Adicionar ao conjunto de pecas novas a dama que criei
+                }
+
+            }
+
             if (EstaEmXeque(Adversaria(JogadorAtual)))  // Se a cor adversaria entre em xeque
             {
                 Xeque = true;
@@ -184,8 +201,6 @@ namespace JogoXadrez.Entidade.CamadaXadrez
                 Turno++; // Passar o turno
                 MudaJogador();
             }
-
-            Peca peca = Tabuleiro.Peca(destino); // Qual peça foi movida? 
 
             // EnPassant 
 
